@@ -46,8 +46,8 @@ namespace Delegates1
             MethodInfo method = myDel.Method;
             object? target = myDel.Target;
 
-            myDel.Invoke(); // the same as myDel();
-            myDel();
+            // myDel.Invoke(); // the same as myDel();
+            // myDel();
 
             // почему делегаты?
 
