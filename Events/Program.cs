@@ -1,4 +1,6 @@
-﻿namespace Events
+﻿using System;
+
+namespace Events
 {
     public class Publisher
     {
@@ -7,6 +9,23 @@
 
         // event itself
         public event MyEvtDelegate? OnSayHaHaHa;
+
+        public void SayHaHaHa()
+        {
+            Console.WriteLine("Saying ha-ha-ha");
+
+            if (OnSayHaHaHa != null)
+            {
+                OnSayHaHaHa(this, EventArgs.Empty);
+            }
+        }
+    }
+
+    public class DelegatePublisher
+    {
+        public delegate void MyEvtDelegate(object? sender, EventArgs e);
+
+        public MyEvtDelegate? OnSayHaHaHa;
 
         public void SayHaHaHa()
         {
@@ -62,31 +81,35 @@
             Console.WriteLine();
             Console.ReadLine();
 
-            // 1. can not sign to delegate directly
-            // 2. can not invoke delegate directly
+            // Events vs Delegates. Why events?
 
-            // set null to delegate from subsribtion
-            // delegatePublisher.OnSayHaHaHa = null;
-            delegatePublisher.SayHaHaHa();
-            Console.WriteLine();
-            Console.ReadLine();
-        }
-    }
-
-    public class DelegatePublisher
-    {
-        public delegate void MyEvtDelegate(object? sender, EventArgs e);
-
-        public MyEvtDelegate? OnSayHaHaHa;
-
-        public void SayHaHaHa()
-        {
-            Console.WriteLine("Saying ha-ha-ha");
-    
-            if (OnSayHaHaHa != null)
+            // 1. can not invoke delegate directly
+            if (delegatePublisher.OnSayHaHaHa != null)
             {
-                OnSayHaHaHa(this, EventArgs.Empty);
+                delegatePublisher.OnSayHaHaHa!.Invoke(new object(), EventArgs.Empty);
             }
+            Console.ReadLine();
+
+
+            // 2. can not sign to delegate directly or set null like this
+            // delegatePublisher.OnSayHaHaHa = null;
+
+            Console.WriteLine($"Is there any subscribers?  {delegatePublisher!.OnSayHaHaHa?.GetInvocationList() != null}");
+            Console.ReadLine();
+
+            if (delegatePublisher?.OnSayHaHaHa != null)
+            {
+                foreach(var del in delegatePublisher!.OnSayHaHaHa?.GetInvocationList()!)
+                {
+                    delegatePublisher.OnSayHaHaHa -= (DelegatePublisher.MyEvtDelegate)del;
+                }
+            }
+
+            Console.WriteLine($"Is there any subscribers?  {delegatePublisher!.OnSayHaHaHa?.GetInvocationList() != null}");
+            Console.ReadLine();
+
+            delegatePublisher!.SayHaHaHa();
+            Console.ReadLine();
         }
     }
 }
