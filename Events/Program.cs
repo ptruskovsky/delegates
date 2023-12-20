@@ -2,6 +2,7 @@
 
 namespace Events
 {
+    // publisher based on event
     public class Publisher
     {
         // delegate for event
@@ -21,6 +22,7 @@ namespace Events
         }
     }
 
+    // publisher based on delegate
     public class DelegatePublisher
     {
         public delegate void MyEvtDelegate(object? sender, EventArgs e);
