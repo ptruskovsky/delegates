@@ -6,8 +6,8 @@
 */
 
 /*
-    Делегаты в C# - это тип данных, который позволяет передавать методы как аргументы другим методам,
-    а также сохранять их в переменных для последующего вызова. 
+    Делегаты в C# - это тип, который представляет ссылки на методы с определенным списком параметров и
+    типом возвращаемого значения
 */
 
 namespace Delegates1
@@ -56,13 +56,30 @@ namespace Delegates1
             PrintItems(result);
             Console.ReadKey();
 
-            //var filteringAlgorithm = new MyFileringAlgorithm(GraterThenTwenty);
-            //var resultFromFilteringAlgorithm = FilterElementsWithAlgorithm(new[] { 1, 2, 3, 10, 20, 30, 101 }, GraterThenTwenty);
+            var filteringAlgorithm = new MyFileringAlgorithm(GraterThenTwenty);
+            var resultFromFilteringAlgorithm = FilterElementsWithAlgorithm(new[] { 1, 2, 3, 10, 20, 30, 101 }, GraterThenTwenty);
             //var resultFromFilteringAlgorithm = FilterElementsWithAlgorithm(new[] { 1, 2, 3, 10, 20, 30, 101 }, LessThenTen);
             //var resultFromFilteringAlgorithm = FilterElementsWithAlgorithm(new[] { 1, 2, 3, 10, 20, 30, 101 }, x => x < 10);
 
-            //PrintItems(resultFromFilteringAlgorithm);
+            PrintItems(resultFromFilteringAlgorithm);
             //Console.ReadKey();
+
+            // цепочка делегатов
+
+            // var chainedDelegate1 = () => Console.WriteLine("ChainedDelegate1 called");
+            // var chainedDelegate2 = () => Console.WriteLine("ChainedDelegate2 called");
+            // var chainedDelegate3 = () => Console.WriteLine("ChainedDelegate3 called");
+
+            //var chainOfDelegates = chainedDelegate1 + chainedDelegate2 + chainedDelegate3;
+            //chainOfDelegates();
+
+            // or
+
+            // chainedDelegate1 += chainedDelegate2;
+            // chainedDelegate1 += chainedDelegate3;
+
+            // chainedDelegate1();
+
 
             static void PrintItems(IEnumerable<int> items)
             {
